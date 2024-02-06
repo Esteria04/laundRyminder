@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -48,6 +45,16 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyBkbwC3LJwONI9vnRbIOhBYGToCUZMBbuA',
+    appId: '1:944106423121:web:62db026c7d5aab779dc970',
+    messagingSenderId: '944106423121',
+    projectId: 'laundryminder-app',
+    authDomain: 'laundryminder-app.firebaseapp.com',
+    storageBucket: 'laundryminder-app.appspot.com',
+    measurementId: 'G-1SKC9FZ0KC',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCMmyRxZLbvgBm0da_1NShL8QB5oLYYyJQ',
