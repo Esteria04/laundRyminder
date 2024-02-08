@@ -39,7 +39,7 @@ class _DormButtonState extends State<DormButton> {
 
     void onPressed() async {
       final prefs = await SharedPreferences.getInstance();
-      List<String> dorms = ["A0", "A1", "B0", "B1"];
+      List<String> dorms = ["Women A", "Men A", "Women B", "Men B"];
       prefs.setString("dorm", picked = dorms[widget.type]);
       parent?.setState(() {});
     }
