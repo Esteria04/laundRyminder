@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laundryminder/pages/entry_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DormButton extends StatefulWidget {
@@ -11,29 +12,42 @@ class DormButton extends StatefulWidget {
 
   final double width;
   final int type;
+
   @override
   State<DormButton> createState() => _DormButtonState();
 }
 
 class _DormButtonState extends State<DormButton> {
   Color color = const Color(0xffA0A2BA);
+  static String? picked;
+  Color check() {
+    if (picked == null) {
+      return const Color(0xffA0A2BA);
+    }
+    if (picked == ["A0", "A1", "B0", "B1"][widget.type]) {
+      return const Color(0xff2E3784);
+    }
+    return const Color(0xffA0A2BA);
+  }
 
   @override
   Widget build(BuildContext context) {
+    State<EntryPage>? parent =
+        context.findAncestorStateOfType<State<EntryPage>>();
     String sex = widget.type % 2 == 0 ? "Women" : "Men";
     String dorm = widget.type < 2 ? "A" : "B";
 
+    void onPressed() async {
+      final prefs = await SharedPreferences.getInstance();
+      List<String> dorms = ["A0", "A1", "B0", "B1"];
+      prefs.setString("dorm", picked = dorms[widget.type]);
+      parent?.setState(() {});
+    }
+
     return ElevatedButton(
-      onPressed: () async {
-        final prefs = await SharedPreferences.getInstance();
-        List<String> dorms = ["Women A", "Men A", "Women B", "Men B"];
-        prefs.setString("dorm", dorms[widget.type]);
-        color = const Color(0xff2E3784);
-        setState(() {});
-      },
+      onPressed: () => onPressed(),
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: const Color(0xff2E3784),
-        backgroundColor: color,
+        backgroundColor: check(),
         foregroundColor: const Color(0xffA0A2BA),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.width * 0.2),
