@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/widgets/machine_card.dart';
 import 'package:laundryminder/widgets/title_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,7 +65,14 @@ class _MainPageState extends State<MainPage> {
               stream: _database.collection("dorms").doc(dorm).snapshots(),
               builder: (context, snapshot) {
                 if (current == null) {
-                  return MachineCard(widthArg: screenWidth, machine: const {});
+                  return MachineCard(widthArg: screenWidth, machine: const {
+                    "type": "Dryer",
+                    "code": 1,
+                    "isCurrent": true,
+                    "isDisabled": false,
+                    "isRunning": true,
+                    "remainingTime": "42 m 23 s",
+                  });
                 }
                 List<String> data = current!.split(":");
                 String type = data[0];
