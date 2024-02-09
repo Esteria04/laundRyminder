@@ -1,5 +1,5 @@
 name: laundryminder
-description: "A new Flutter project."
+description: "Dormitory laundry status checking application"
 publish_to: 'none'
 version: 0.1.0
 
@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   cloud_firestore: ^4.15.4
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -22,7 +23,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  
-assets:
-  - assets/
+  assets:
+    - assets/disabled.png
+    - assets/dryer_running.gif
+    - assets/dryer_vacant.png
+    - assets/washer_running.gif
+    - assets/washer_vacant.png
+    - assets/icons/add_new.svg
+    - assets/icons/nfc_tag.svg
 

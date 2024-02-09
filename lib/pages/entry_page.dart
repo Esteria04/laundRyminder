@@ -26,9 +26,9 @@ class _EntryPageState extends State<EntryPage> {
               children: [
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
-                  child: const TitleText(
+                  child: TitleText(
                     data: "Select your\ndorm type",
-                    fontSize: 43,
+                    fontSize: screenWidth * 0.1,
                   ),
                 ),
               ],

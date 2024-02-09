@@ -21,10 +21,8 @@ class _DormButtonState extends State<DormButton> {
   Color color = const Color(0xffA0A2BA);
   static String? picked;
   Color check() {
-    if (picked == null) {
-      return const Color(0xffA0A2BA);
-    }
-    if (picked == ["A0", "A1", "B0", "B1"][widget.type]) {
+    if (picked == null) return const Color(0xffA0A2BA);
+    if (picked == ["Women A", "Men A", "Women B", "Men B"][widget.type]) {
       return const Color(0xff2E3784);
     }
     return const Color(0xffA0A2BA);
