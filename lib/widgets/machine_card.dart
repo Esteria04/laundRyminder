@@ -1,8 +1,9 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MachineCard extends StatelessWidget {
+class MachineCard extends StatefulWidget {
   const MachineCard({
     super.key,
     required this.widthArg,
@@ -11,13 +12,35 @@ class MachineCard extends StatelessWidget {
 
   final double widthArg;
   final Map<String, dynamic> machine;
+
+  @override
+  State<MachineCard> createState() => _MachineCardState();
+}
+
+class _MachineCardState extends State<MachineCard> {
+  int remainingTime = 5000;
+  late Timer timer;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.machine["remainingTime"] != null) {
+      remainingTime = widget.machine["remainingTime"];
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        setState(() {
+          remainingTime--;
+        });
+      });
+    }
+  }
+
   // type, code, isCurrent, isDisabled, isRunning, remainingTime
   @override
   Widget build(BuildContext context) {
     String imgPath, statusText, nameText;
     Color backgroundColor, statusColor, nameColor;
     Row content;
-    if (machine.isEmpty) {
+    if (widget.machine.isEmpty) {
       content = Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -27,15 +50,15 @@ class MachineCard extends StatelessWidget {
               Colors.white,
               BlendMode.srcIn,
             ),
-            width: widthArg * 0.25,
-            height: widthArg * 0.25,
+            width: widget.widthArg * 0.25,
+            height: widget.widthArg * 0.25,
           ),
           Text(
             "Add New",
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
               color: Colors.white,
-              fontSize: widthArg * 0.12,
+              fontSize: widget.widthArg * 0.12,
               fontWeight: FontWeight.bold,
             ),
           )
@@ -43,11 +66,11 @@ class MachineCard extends StatelessWidget {
       );
       backgroundColor = const Color(0xff1C1B64);
     } else {
-      nameText = machine["type"] + " No." + "${machine["code"]}";
+      nameText = widget.machine["type"] + " No." + "${widget.machine["code"]}";
 
-      if (machine["type"] == "Washer") {
+      if (widget.machine["type"] == "Washer") {
         // washer
-        if (machine["isCurrent"]) {
+        if (widget.machine["isCurrent"]) {
           backgroundColor = const Color(0xff1C1B64);
           nameColor = statusColor = Colors.white;
         } else {
@@ -55,8 +78,8 @@ class MachineCard extends StatelessWidget {
           nameColor = const Color(0xff064667);
           statusColor = const Color(0xff4066B0);
         }
-        statusText = machine["remainingTime"];
-        if (machine["isRunning"]) {
+        statusText = '${remainingTime ~/ 60} m ${remainingTime % 60} s';
+        if (widget.machine["isRunning"]) {
           imgPath = "assets/washer_running.gif";
         } else {
           imgPath = "assets/washer_vacant.png";
@@ -64,7 +87,7 @@ class MachineCard extends StatelessWidget {
         }
       } else {
         // dryer
-        if (machine["isCurrent"]) {
+        if (widget.machine["isCurrent"]) {
           backgroundColor = const Color(0xff7C0016);
           nameColor = statusColor = Colors.white;
         } else {
@@ -72,8 +95,8 @@ class MachineCard extends StatelessWidget {
           nameColor = const Color(0xffB83C40);
           statusColor = const Color(0xff9F292E);
         }
-        statusText = machine["remainingTime"];
-        if (machine["isRunning"]) {
+        statusText = '${remainingTime ~/ 60} m ${remainingTime % 60} s';
+        if (widget.machine["isRunning"]) {
           imgPath = "assets/dryer_running.gif";
         } else {
           imgPath = "assets/dryer_vacant.png";
@@ -81,7 +104,7 @@ class MachineCard extends StatelessWidget {
         }
       }
 
-      if (machine["isDisabled"]) {
+      if (widget.machine["isDisabled"]) {
         // disabled
         imgPath = "assets/disabled.png";
         backgroundColor = const Color(0xffABABAB);
@@ -92,25 +115,27 @@ class MachineCard extends StatelessWidget {
 
       Image icon = Image.asset(
         imgPath,
-        width: widthArg * 0.25,
-        height: widthArg * 0.25,
+        width: widget.widthArg * 0.25,
+        height: widget.widthArg * 0.25,
       );
 
       content = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          SizedBox(width: widget.widthArg * 0.025),
           icon,
+          SizedBox(width: widget.widthArg * 0.025),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: widthArg * 0.05),
+              SizedBox(height: widget.widthArg * 0.05),
               Text(
                 nameText,
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.bold,
                   color: nameColor,
-                  fontSize: widthArg * 0.06,
+                  fontSize: widget.widthArg * 0.06,
                   height: 0.3,
                 ),
               ),
@@ -119,7 +144,7 @@ class MachineCard extends StatelessWidget {
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.bold,
                   color: statusColor,
-                  fontSize: widthArg * 0.1,
+                  fontSize: widget.widthArg * 0.1,
                 ),
               ),
             ],
@@ -132,10 +157,10 @@ class MachineCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: GestureDetector(
         child: Container(
-          width: widthArg * 0.84,
-          height: widthArg * 0.3,
+          width: widget.widthArg * 0.84,
+          height: widget.widthArg * 0.3,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(widthArg * 0.03),
+            borderRadius: BorderRadius.circular(widget.widthArg * 0.03),
             color: backgroundColor,
           ),
           child: content,

@@ -54,7 +54,7 @@ class _EntryPageState extends State<EntryPage> {
               ],
             ),
             SizedBox(height: screenWidth * 0.2),
-            SaveButton(width: screenWidth)
+            SaveButton(width: screenWidth),
           ],
         ),
       ),
