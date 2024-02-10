@@ -43,7 +43,7 @@ class _DormButtonState extends State<DormButton> {
     }
 
     return ElevatedButton(
-      onPressed: () => onPressed(),
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: check(),
         foregroundColor: const Color(0xffA0A2BA),

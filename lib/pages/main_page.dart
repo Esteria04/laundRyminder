@@ -42,18 +42,6 @@ class _MainPageState extends State<MainPage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
               child: TitleText(
-                data: "Recently used",
-                fontSize: screenWidth * 0.07,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
-              child: TitleText(
                 data: "Currently using",
                 fontSize: screenWidth * 0.07,
               ),

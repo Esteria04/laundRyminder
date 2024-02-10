@@ -30,5 +30,5 @@ flutter:
     - assets/washer_running.gif
     - assets/washer_vacant.png
     - assets/icons/add_new.svg
-    - assets/icons/nfc_tag.svg
+    - assets/icons/nfc_tag.png
 

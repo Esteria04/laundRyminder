@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laundryminder/widgets/bottomsheet_button.dart';
 
 class MachineCard extends StatefulWidget {
   const MachineCard({
@@ -20,17 +21,70 @@ class MachineCard extends StatefulWidget {
 class _MachineCardState extends State<MachineCard> {
   int remainingTime = 5000;
   late Timer timer;
+  late bool isAddNew;
 
   @override
   void initState() {
     super.initState();
+    isAddNew = widget.machine.isEmpty ? true : false;
     if (widget.machine["remainingTime"] != null) {
       remainingTime = widget.machine["remainingTime"];
       timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
-          remainingTime--;
+          if (remainingTime > 0) {
+            remainingTime--;
+          } else {
+            return;
+          }
         });
       });
+    }
+  }
+
+  void onTap() {
+    if (isAddNew) {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            Color textColor = const Color(0xff1C1B64);
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(widget.widthArg * 0.16),
+              child: SizedBox(
+                width: widget.widthArg,
+                height: widget.widthArg * 0.8,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Ready to Scan",
+                      style: GoogleFonts.inter(
+                        color: textColor,
+                        fontWeight: FontWeight.normal,
+                        fontSize: widget.widthArg * 0.05,
+                      ),
+                    ),
+                    Image.asset(
+                      "assets/icons/nfc_tag.png",
+                      width: widget.widthArg * 0.3,
+                    ),
+                    Text(
+                      "Move your phone closer to the NFC tag.",
+                      style: GoogleFonts.inter(
+                        color: textColor,
+                        fontWeight: FontWeight.normal,
+                        fontSize: widget.widthArg * 0.03,
+                      ),
+                    ),
+                    BottomSheetButton(
+                      widthArg: widget.widthArg,
+                      text: "Cancel",
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
     }
   }
 
@@ -85,6 +139,10 @@ class _MachineCardState extends State<MachineCard> {
           imgPath = "assets/washer_vacant.png";
           statusText = "VACANT";
         }
+        if (remainingTime == 0) {
+          statusText = "VACANT";
+          imgPath = "assets/washer_vacant.png";
+        }
       } else {
         // dryer
         if (widget.machine["isCurrent"]) {
@@ -101,6 +159,10 @@ class _MachineCardState extends State<MachineCard> {
         } else {
           imgPath = "assets/dryer_vacant.png";
           statusText = "VACANT";
+        }
+        if (remainingTime == 0) {
+          statusText = "VACANT";
+          imgPath = "assets/dryer_vacant.png";
         }
       }
 
@@ -154,8 +216,9 @@ class _MachineCardState extends State<MachineCard> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: GestureDetector(
+        onTap: onTap,
         child: Container(
           width: widget.widthArg * 0.84,
           height: widget.widthArg * 0.3,
