@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:laundryminder/utils/prefs.dart';
 import 'package:laundryminder/widgets/machine_card.dart';
 import 'package:laundryminder/widgets/title_text.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -13,19 +15,12 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final _database = FirebaseFirestore.instance;
-  String? dorm;
-  String? current;
+  String dorm = Prefs.getStringValue("dorm");
+  String current = Prefs.getStringValue("current");
 
   @override
   void initState() {
     super.initState();
-    initializeDorm();
-  }
-
-  void initializeDorm() async {
-    final prefs = await SharedPreferences.getInstance();
-    dorm = prefs.getString("dorm");
-    current = prefs.getString("current");
   }
 
   @override

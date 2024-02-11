@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/pages/entry_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:laundryminder/utils/prefs.dart';
 
 class DormButton extends StatefulWidget {
   const DormButton({
@@ -36,9 +36,8 @@ class _DormButtonState extends State<DormButton> {
     String dorm = widget.type < 2 ? "A" : "B";
 
     void onPressed() async {
-      final prefs = await SharedPreferences.getInstance();
       List<String> dorms = ["Women A", "Men A", "Women B", "Men B"];
-      prefs.setString("dorm", picked = dorms[widget.type]);
+      Prefs.setStringValue("dorm", picked = dorms[widget.type]);
       parent?.setState(() {});
     }
 

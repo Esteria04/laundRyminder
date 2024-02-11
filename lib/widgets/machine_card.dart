@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/widgets/bottomsheet_button.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class MachineCard extends StatefulWidget {
   const MachineCard({
@@ -88,7 +89,19 @@ class _MachineCardState extends State<MachineCard> {
               ),
             );
           });
+      readNFC();
     }
+  }
+
+  void readNFC() {
+    NfcManager.instance.startSession(
+      onError: (error) {
+        throw Exception(error);
+      },
+      onDiscovered: (NfcTag tag) async {
+        NfcManager.instance.stopSession();
+      },
+    );
   }
 
   // type, code, isCurrent, isDisabled, isRunning, remainingTime
