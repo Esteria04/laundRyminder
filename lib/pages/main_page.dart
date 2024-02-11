@@ -19,11 +19,6 @@ class _MainPageState extends State<MainPage> {
   String current = Prefs.getStringValue("current");
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(

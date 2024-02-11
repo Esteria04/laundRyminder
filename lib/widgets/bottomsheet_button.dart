@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class BottomSheetButton extends StatelessWidget {
   const BottomSheetButton({
@@ -20,6 +21,7 @@ class BottomSheetButton extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       onPressed: () {
+        NfcManager.instance.stopSession();
         Navigator.of(context).pop();
       },
       child: SizedBox(

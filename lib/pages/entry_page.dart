@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:laundryminder/widgets/dorm_buton.dart';
 import 'package:laundryminder/widgets/save_button.dart';
 import 'package:laundryminder/widgets/title_text.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class EntryPage extends StatefulWidget {
   const EntryPage({super.key});

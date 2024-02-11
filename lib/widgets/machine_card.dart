@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/widgets/bottomsheet_button.dart';
+import 'package:laundryminder/widgets/rounded_bottomsheet.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 class MachineCard extends StatefulWidget {
@@ -51,41 +52,38 @@ class _MachineCardState extends State<MachineCard> {
           isDismissible: false,
           builder: (context) {
             Color textColor = const Color(0xff1C1B64);
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(widget.widthArg * 0.16),
-              child: SizedBox(
-                width: widget.widthArg,
-                height: widget.widthArg * 0.8,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Ready to Scan",
-                      style: GoogleFonts.inter(
-                        color: textColor,
-                        fontWeight: FontWeight.normal,
-                        fontSize: widget.widthArg * 0.05,
-                      ),
+            return RoundedBottomSheet(
+              widthArg: widget.widthArg,
+              heightArg: 0.8,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Ready to Scan",
+                    style: GoogleFonts.inter(
+                      color: textColor,
+                      fontWeight: FontWeight.normal,
+                      fontSize: widget.widthArg * 0.05,
                     ),
-                    Image.asset(
-                      "assets/icons/nfc_tag.png",
-                      width: widget.widthArg * 0.3,
+                  ),
+                  Image.asset(
+                    "assets/icons/nfc_tag.png",
+                    width: widget.widthArg * 0.3,
+                  ),
+                  Text(
+                    "Move your phone closer to the NFC tag.",
+                    style: GoogleFonts.inter(
+                      color: textColor,
+                      fontWeight: FontWeight.normal,
+                      fontSize: widget.widthArg * 0.03,
                     ),
-                    Text(
-                      "Move your phone closer to the NFC tag.",
-                      style: GoogleFonts.inter(
-                        color: textColor,
-                        fontWeight: FontWeight.normal,
-                        fontSize: widget.widthArg * 0.03,
-                      ),
-                    ),
-                    BottomSheetButton(
-                      widthArg: widget.widthArg,
-                      text: "Cancel",
-                    ),
-                  ],
-                ),
+                  ),
+                  BottomSheetButton(
+                    widthArg: widget.widthArg,
+                    text: "Cancel",
+                  ),
+                ],
               ),
             );
           });
@@ -99,7 +97,16 @@ class _MachineCardState extends State<MachineCard> {
         throw Exception(error);
       },
       onDiscovered: (NfcTag tag) async {
-        NfcManager.instance.stopSession();
+        int dorm = List<int>.from(
+                tag.data["ndef"]["cachedMessage"]["records"][0]["type"])[0] -
+            48;
+        int machineType = List<int>.from(
+                tag.data["ndef"]["cachedMessage"]["records"][0]["type"])[2] -
+            48;
+        int machineCode = List<int>.from(
+                tag.data["ndef"]["cachedMessage"]["records"][0]["payload"])[0] -
+            48;
+        print("$dorm $machineType $machineCode");
       },
     );
   }
