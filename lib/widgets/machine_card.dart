@@ -30,13 +30,15 @@ class _MachineCardState extends State<MachineCard> {
     if (widget.machine["remainingTime"] != null) {
       remainingTime = widget.machine["remainingTime"];
       timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() {
-          if (remainingTime > 0) {
-            remainingTime--;
-          } else {
-            return;
-          }
-        });
+        if (mounted) {
+          setState(() {
+            if (remainingTime > 0) {
+              remainingTime--;
+            } else {
+              return;
+            }
+          });
+        }
       });
     }
   }
@@ -45,6 +47,7 @@ class _MachineCardState extends State<MachineCard> {
     if (isAddNew) {
       showModalBottomSheet(
           context: context,
+          isDismissible: false,
           builder: (context) {
             Color textColor = const Color(0xff1C1B64);
             return ClipRRect(

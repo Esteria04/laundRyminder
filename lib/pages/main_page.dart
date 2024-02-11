@@ -66,7 +66,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         StreamBuilder(
-            stream: _database.collection("dorms").doc("Men A").snapshots(),
+            stream: _database.collection("dorms").doc(dorm).snapshots(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 int len = snapshot.data!["machines"].length;
