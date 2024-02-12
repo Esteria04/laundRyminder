@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laundryminder/utils/prefs.dart';
 import 'package:laundryminder/widgets/bottomsheet_button.dart';
 import 'package:laundryminder/widgets/rounded_bottomsheet.dart';
 import 'package:nfc_manager/nfc_manager.dart';
@@ -106,7 +107,12 @@ class _MachineCardState extends State<MachineCard> {
         int machineCode = List<int>.from(
                 tag.data["ndef"]["cachedMessage"]["records"][0]["payload"])[0] -
             48;
-        print("$dorm $machineType $machineCode");
+
+        Prefs.setMapValue("current", {
+          "dorm": dorm,
+          "machineType": machineType,
+          "machineCode": machineCode
+        });
       },
     );
   }

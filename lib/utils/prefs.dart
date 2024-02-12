@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -14,6 +16,10 @@ class Prefs {
     preferences.setString(key, value);
   }
 
+  static setMapValue(String key, Map<String, dynamic> map) {
+    preferences.setString(key, jsonEncode(map));
+  }
+
   static setIntValue(String key, int value) {
     preferences.setInt(key, value);
   }
@@ -28,6 +34,14 @@ class Prefs {
 
   static String getStringValue(String key) {
     return preferences.getString(key) ?? "";
+  }
+
+  static Map<String, dynamic> getMapValue(String key) {
+    String? value = preferences.getString(key);
+    if (value == null) {
+      throw Exception("Null value returned");
+    }
+    return jsonDecode(value);
   }
 
   static int getIntValue(String key) {
