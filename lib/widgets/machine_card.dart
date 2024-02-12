@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/utils/prefs.dart';
 import 'package:laundryminder/widgets/bottomsheet_button.dart';
 import 'package:laundryminder/widgets/rounded_bottomsheet.dart';
+import 'package:laundryminder/widgets/submit_button.dart';
+import 'package:laundryminder/widgets/time_options_radio.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
 class MachineCard extends StatefulWidget {
@@ -25,7 +27,6 @@ class _MachineCardState extends State<MachineCard> {
   int remainingTime = 5000;
   late Timer timer;
   late bool isAddNew;
-
   @override
   void initState() {
     super.initState();
@@ -108,13 +109,70 @@ class _MachineCardState extends State<MachineCard> {
                 tag.data["ndef"]["cachedMessage"]["records"][0]["payload"])[0] -
             48;
 
-        Prefs.setMapValue("current", {
-          "dorm": dorm,
-          "machineType": machineType,
-          "machineCode": machineCode
-        });
+        Prefs.setMapValue("current",
+            {"dorm": dorm, "type": machineType, "code": machineCode});
+        NfcManager.instance.stopSession();
+        Navigator.of(context).pop();
+        showMachineSelectSheet();
       },
     );
+  }
+
+  void showMachineSelectSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          Color textColor = const Color(0xff1C1B64);
+          Map<String, dynamic> machine = Prefs.getMapValue("current");
+          String imgPath = machine["type"] == 0
+              ? "assets/washer_vacant.png"
+              : "assets/dryer_vacant.png";
+          String machineName = machine["type"] == 0
+              ? "Washer No.${machine["code"]}"
+              : "Dryer No.${machine["code"]}";
+
+          return RoundedBottomSheet(
+            widthArg: widget.widthArg,
+            heightArg: 0.55,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Image.asset(
+                      imgPath,
+                      width: widget.widthArg * 0.28,
+                      height: widget.widthArg * 0.28,
+                    ),
+                    SizedBox(
+                      height: widget.widthArg * 0.28,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            machineName,
+                            style: GoogleFonts.inter(
+                              color: const Color(0xff1C1B64),
+                              fontWeight: FontWeight.bold,
+                              fontSize: widget.widthArg * 0.06,
+                            ),
+                          ),
+                          TimeOptionRadio(widthArg: widget.widthArg),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                SubmitButton(
+                  widthArg: widget.widthArg,
+                  text: "Start",
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   // type, code, isCurrent, isDisabled, isRunning, remainingTime

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RoundedBottomSheet extends StatelessWidget {
+class RoundedBottomSheet extends StatefulWidget {
   const RoundedBottomSheet({
     super.key,
     required this.widthArg,
@@ -14,13 +14,17 @@ class RoundedBottomSheet extends StatelessWidget {
   final Widget child;
 
   @override
+  State<RoundedBottomSheet> createState() => _RoundedBottomSheetState();
+}
+
+class _RoundedBottomSheetState extends State<RoundedBottomSheet> {
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(widthArg * 0.16),
       child: SizedBox(
-        width: widthArg,
-        height: widthArg * heightArg,
-        child: child,
+        width: widget.widthArg,
+        height: widget.widthArg * widget.heightArg,
+        child: widget.child,
       ),
     );
   }
