@@ -24,7 +24,7 @@ class MachineCard extends StatefulWidget {
 }
 
 class _MachineCardState extends State<MachineCard> {
-  int remainingTime = 5000;
+  late int remainingTime;
   late Timer timer;
   late bool isAddNew;
   @override
@@ -122,7 +122,6 @@ class _MachineCardState extends State<MachineCard> {
     showModalBottomSheet(
         context: context,
         builder: (context) {
-          Color textColor = const Color(0xff1C1B64);
           Map<String, dynamic> machine = Prefs.getMapValue("current");
           String imgPath = machine["type"] == 0
               ? "assets/washer_vacant.png"

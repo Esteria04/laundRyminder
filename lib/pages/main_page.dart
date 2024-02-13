@@ -66,22 +66,21 @@ class _MainPageState extends State<MainPage> {
                   child: ListView.builder(
                     itemCount: len,
                     itemBuilder: (context, index) {
+                      print("test");
                       Map<String, dynamic> machineData = data[index];
-                      if (machineData["type"] + '$machineData["code"]' ==
+                      if (machineData["type"] + '${machineData["code"]}' ==
                           current) {
                         return Container();
                       }
                       int remainingTime;
                       bool isRunning = machineData["isRunning"];
-                      String date = machineData["startedAt"].substring(0, 8);
-                      String time = machineData["startedAt"].substring(9);
+                      Timestamp timestamp = machineData["startedAt"];
+                      DateTime startedAt = timestamp.toDate();
 
                       switch (machineData["option"]) {
                         case 0:
                           remainingTime = 45 * 60 -
-                              (DateTime.now().difference(
-                                      DateTime.parse('${date}T$time')))
-                                  .inSeconds;
+                              (DateTime.now().difference(startedAt)).inSeconds;
                           if (remainingTime <= 0) {
                             remainingTime = 0;
                             isRunning = false;
@@ -89,9 +88,7 @@ class _MainPageState extends State<MainPage> {
                           break;
                         case 1:
                           remainingTime = 50 * 60 -
-                              (DateTime.now().difference(
-                                      DateTime.parse('${date}T$time')))
-                                  .inSeconds;
+                              (DateTime.now().difference(startedAt)).inSeconds;
                           if (remainingTime <= 0) {
                             remainingTime = 0;
                             isRunning = false;
@@ -99,9 +96,7 @@ class _MainPageState extends State<MainPage> {
                           break;
                         case 2:
                           remainingTime = 80 * 60 -
-                              (DateTime.now().difference(
-                                      DateTime.parse('${date}T$time')))
-                                  .inSeconds;
+                              (DateTime.now().difference(startedAt)).inSeconds;
                           if (remainingTime <= 0) {
                             remainingTime = 0;
                             isRunning = false;
