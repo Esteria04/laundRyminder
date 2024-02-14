@@ -17,6 +17,14 @@ class _MainPageState extends State<MainPage> {
   final _database = FirebaseFirestore.instance;
   String dorm = Prefs.getStringValue("dorm");
   String current = Prefs.getStringValue("current");
+  late Stream stream;
+
+  @override
+  void initState() {
+    stream =
+        FirebaseFirestore.instance.collection("dorms").doc(dorm).snapshots();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         StreamBuilder(
-            stream: _database.collection("dorms").doc(dorm).snapshots(),
+            stream: stream,
             builder: (context, snapshot) {
               return MachineCard(widthArg: screenWidth, machine: const {});
             }),
@@ -56,7 +64,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         StreamBuilder(
-            stream: _database.collection("dorms").doc(dorm).snapshots(),
+            stream: stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 int len = snapshot.data!["machines"].length;

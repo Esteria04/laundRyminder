@@ -45,8 +45,8 @@ class SubmitButton extends StatelessWidget {
           database
               .collection("dorms")
               .doc(currentDorm)
-              .set({"machines": response}, SetOptions(merge: true));
-          database.terminate();
+              .set({"machines": response}, SetOptions(merge: true)).onError(
+                  (error, stackTrace) => print(error));
         });
       }
     }
