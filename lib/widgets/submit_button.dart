@@ -22,14 +22,11 @@ class SubmitButton extends StatelessWidget {
       String currentDorm =
           ["Men A", "Men B", "Women A", "Women B"][current["dorm"]];
       bool matches = Prefs.getStringValue("dorm") == currentDorm;
+      late List<dynamic> response;
+      var document = database.collection("dorms").doc(currentDorm);
       if (matches) {
-        database
-            .collection("dorms")
-            .doc(currentDorm)
-            .snapshots()
-            .listen((event) {
-          List<dynamic> response = event.data()!["machines"];
-
+        document.get().then((doc) {
+          response = doc.data()!["machines"];
           for (int i = 0; i < response.length; i++) {
             if (response[i]["type"] == ["Washer", "Dryer"][current["type"]] &&
                 response[i]["code"] == current["code"]) {
@@ -42,11 +39,10 @@ class SubmitButton extends StatelessWidget {
               break;
             }
           }
-          database
-              .collection("dorms")
-              .doc(currentDorm)
-              .set({"machines": response}, SetOptions(merge: true)).onError(
-                  (error, stackTrace) => print(error));
+        }).then((value) {
+          document.set({"machines": response}, SetOptions(merge: true));
+        }).then((value) {
+          Navigator.of(context).pop();
         });
       }
     }
