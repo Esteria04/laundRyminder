@@ -74,7 +74,6 @@ class _MainPageState extends State<MainPage> {
                   child: ListView.builder(
                     itemCount: len,
                     itemBuilder: (context, index) {
-                      print("test");
                       Map<String, dynamic> machineData = data[index];
                       if (machineData["type"] + '${machineData["code"]}' ==
                           current) {
