@@ -25,27 +25,8 @@ class MachineCard extends StatefulWidget {
 
 class _MachineCardState extends State<MachineCard> {
   late int remainingTime;
-  late Timer timer;
+  Timer? timer;
   late bool isAddNew;
-  @override
-  void initState() {
-    super.initState();
-    isAddNew = widget.machine.isEmpty ? true : false;
-    if (widget.machine["remainingTime"] != null) {
-      remainingTime = widget.machine["remainingTime"];
-      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        if (mounted) {
-          setState(() {
-            if (remainingTime > 0) {
-              remainingTime--;
-            } else {
-              return;
-            }
-          });
-        }
-      });
-    }
-  }
 
   void onTap() {
     if (isAddNew) {
@@ -172,6 +153,39 @@ class _MachineCardState extends State<MachineCard> {
             ),
           );
         });
+  }
+
+  void startTimer() {
+    if (widget.machine["remainingTime"] != null) {
+      remainingTime = widget.machine["remainingTime"];
+      timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (mounted) {
+          setState(() {
+            if (remainingTime > 0) {
+              remainingTime--;
+            } else {
+              return;
+            }
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    isAddNew = widget.machine.isEmpty ? true : false;
+    startTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant MachineCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget != oldWidget) {
+      timer?.cancel();
+      startTimer();
+    }
   }
 
   // type, code, isCurrent, isDisabled, isRunning, remainingTime
