@@ -8,10 +8,14 @@ class SubmitButton extends StatelessWidget {
     super.key,
     required this.widthArg,
     required this.text,
+    required this.backgroundColor,
+    required this.textColor,
   });
 
   final double widthArg;
   final String text;
+  final Color backgroundColor;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +55,7 @@ class SubmitButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widthArg * 0.035)),
-        backgroundColor: const Color(0xffC5D8FF),
+        backgroundColor: backgroundColor,
         foregroundColor: Colors.white,
       ),
       onPressed: onPressed,
@@ -62,7 +66,7 @@ class SubmitButton extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.inter(
-              color: const Color(0xff1C1B64),
+              color: textColor,
               fontWeight: FontWeight.normal,
               fontSize: widthArg * 0.035,
             ),

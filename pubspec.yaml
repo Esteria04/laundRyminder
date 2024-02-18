@@ -26,6 +26,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/disabled.png
+    - assets/washer.png
+    - assets/dryer.png
     - assets/dryer_running.gif
     - assets/dryer_vacant.png
     - assets/washer_running.gif

@@ -6,20 +6,21 @@ class TimeOptionRadio extends StatefulWidget {
   const TimeOptionRadio({
     super.key,
     required this.widthArg,
+    required this.color,
   });
 
   final double widthArg;
-
+  final Color color;
   @override
   State<TimeOptionRadio> createState() => _TimeOptionRadioState();
 }
 
 class _TimeOptionRadioState extends State<TimeOptionRadio> {
   int picked = -1;
-  Color defaultColor = const Color(0xffA0A2BA);
-  Color pickedColor = const Color(0xff2E3784);
   @override
   Widget build(BuildContext context) {
+    Color defaultColor = const Color(0xffA0A2BA);
+    Color pickedColor = widget.color;
     double size = widget.widthArg * 0.18;
     return SizedBox(
       width: size * 3 + widget.widthArg * 0.08,

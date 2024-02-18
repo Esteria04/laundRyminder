@@ -14,7 +14,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _database = FirebaseFirestore.instance;
   String dorm = Prefs.getStringValue("dorm");
   String current = Prefs.getStringValue("current");
   late Stream stream;

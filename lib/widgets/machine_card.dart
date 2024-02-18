@@ -104,12 +104,20 @@ class _MachineCardState extends State<MachineCard> {
         context: context,
         builder: (context) {
           Map<String, dynamic> machine = Prefs.getMapValue("current");
-          String imgPath = machine["type"] == 0
-              ? "assets/washer_vacant.png"
-              : "assets/dryer_vacant.png";
+          String imgPath =
+              machine["type"] == 0 ? "assets/washer.png" : "assets/dryer.png";
           String machineName = machine["type"] == 0
               ? "Washer No.${machine["code"]}"
               : "Dryer No.${machine["code"]}";
+          Color submitBtnColor = machine["type"] == 0
+              ? const Color(0xffC5D8FF)
+              : const Color(0xffFFC5C5);
+          Color textColor = machine["type"] == 0
+              ? const Color(0xff1C1B64)
+              : const Color(0xff940000);
+          Color timeRadioColor = machine["type"] == 0
+              ? const Color(0xff2E3784)
+              : const Color(0xff842E2E);
 
           return RoundedBottomSheet(
             widthArg: widget.widthArg,
@@ -134,12 +142,13 @@ class _MachineCardState extends State<MachineCard> {
                           Text(
                             machineName,
                             style: GoogleFonts.inter(
-                              color: const Color(0xff1C1B64),
+                              color: textColor,
                               fontWeight: FontWeight.bold,
                               fontSize: widget.widthArg * 0.06,
                             ),
                           ),
-                          TimeOptionRadio(widthArg: widget.widthArg),
+                          TimeOptionRadio(
+                              widthArg: widget.widthArg, color: timeRadioColor),
                         ],
                       ),
                     )
@@ -148,6 +157,8 @@ class _MachineCardState extends State<MachineCard> {
                 SubmitButton(
                   widthArg: widget.widthArg,
                   text: "Start",
+                  backgroundColor: submitBtnColor,
+                  textColor: textColor,
                 ),
               ],
             ),
