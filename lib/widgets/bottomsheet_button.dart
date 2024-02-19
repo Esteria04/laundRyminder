@@ -15,6 +15,8 @@ class BottomSheetButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        shadowColor: Colors.transparent,
+        elevation: 0,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(widthArg * 0.035)),
         backgroundColor: const Color(0xffC5D8FF),

@@ -36,6 +36,8 @@ class _TimeOptionRadioState extends State<TimeOptionRadio> {
               Prefs.setIntValue("option", 0);
             },
             style: ElevatedButton.styleFrom(
+              elevation: 0,
+              shadowColor: Colors.transparent,
               backgroundColor: picked == 0 ? pickedColor : defaultColor,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -67,6 +69,8 @@ class _TimeOptionRadioState extends State<TimeOptionRadio> {
               Prefs.setIntValue("option", 1);
             },
             style: ElevatedButton.styleFrom(
+              elevation: 0,
+              shadowColor: Colors.transparent,
               backgroundColor: picked == 1 ? pickedColor : defaultColor,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
@@ -98,6 +102,8 @@ class _TimeOptionRadioState extends State<TimeOptionRadio> {
               Prefs.setIntValue("option", 2);
             },
             style: ElevatedButton.styleFrom(
+              elevation: 0,
+              shadowColor: Colors.transparent,
               backgroundColor: picked == 2 ? pickedColor : defaultColor,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(

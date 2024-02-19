@@ -101,69 +101,70 @@ class _MachineCardState extends State<MachineCard> {
 
   void showMachineSelectSheet() {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          Map<String, dynamic> machine = Prefs.getMapValue("current");
-          String imgPath =
-              machine["type"] == 0 ? "assets/washer.png" : "assets/dryer.png";
-          String machineName = machine["type"] == 0
-              ? "Washer No.${machine["code"]}"
-              : "Dryer No.${machine["code"]}";
-          Color submitBtnColor = machine["type"] == 0
-              ? const Color(0xffC5D8FF)
-              : const Color(0xffFFC5C5);
-          Color textColor = machine["type"] == 0
-              ? const Color(0xff1C1B64)
-              : const Color(0xff940000);
-          Color timeRadioColor = machine["type"] == 0
-              ? const Color(0xff2E3784)
-              : const Color(0xff842E2E);
+      context: context,
+      builder: (context) {
+        Map<String, dynamic> machine = Prefs.getMapValue("current");
+        String imgPath =
+            machine["type"] == 0 ? "assets/washer.png" : "assets/dryer.png";
+        String machineName = machine["type"] == 0
+            ? "Washer No.${machine["code"]}"
+            : "Dryer No.${machine["code"]}";
+        Color submitBtnColor = machine["type"] == 0
+            ? const Color(0xffC5D8FF)
+            : const Color(0xffFFC5C5);
+        Color textColor = machine["type"] == 0
+            ? const Color(0xff1C1B64)
+            : const Color(0xff940000);
+        Color timeRadioColor = machine["type"] == 0
+            ? const Color(0xff2E3784)
+            : const Color(0xff842E2E);
 
-          return RoundedBottomSheet(
-            widthArg: widget.widthArg,
-            heightArg: 0.55,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      imgPath,
-                      width: widget.widthArg * 0.28,
-                      height: widget.widthArg * 0.28,
-                    ),
-                    SizedBox(
-                      height: widget.widthArg * 0.28,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            machineName,
-                            style: GoogleFonts.inter(
-                              color: textColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: widget.widthArg * 0.06,
-                            ),
+        return RoundedBottomSheet(
+          widthArg: widget.widthArg,
+          heightArg: 0.55,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Image.asset(
+                    imgPath,
+                    width: widget.widthArg * 0.28,
+                    height: widget.widthArg * 0.28,
+                  ),
+                  SizedBox(
+                    height: widget.widthArg * 0.28,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          machineName,
+                          style: GoogleFonts.inter(
+                            color: textColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: widget.widthArg * 0.06,
                           ),
-                          TimeOptionRadio(
-                              widthArg: widget.widthArg, color: timeRadioColor),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                SubmitButton(
-                  widthArg: widget.widthArg,
-                  text: "Start",
-                  backgroundColor: submitBtnColor,
-                  textColor: textColor,
-                ),
-              ],
-            ),
-          );
-        });
+                        ),
+                        TimeOptionRadio(
+                            widthArg: widget.widthArg, color: timeRadioColor),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              SubmitButton(
+                widthArg: widget.widthArg,
+                text: "Start",
+                backgroundColor: submitBtnColor,
+                textColor: textColor,
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void startTimer() {
