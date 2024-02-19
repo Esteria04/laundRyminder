@@ -90,8 +90,8 @@ class _MachineCardState extends State<MachineCard> {
                 tag.data["ndef"]["cachedMessage"]["records"][0]["payload"])[0] -
             48;
 
-        Prefs.setMapValue("current",
-            {"dorm": dorm, "type": machineType, "code": machineCode});
+        Prefs.setMapValue(
+            "picked", {"dorm": dorm, "type": machineType, "code": machineCode});
         NfcManager.instance.stopSession();
         Navigator.of(context).pop();
         showMachineSelectSheet();

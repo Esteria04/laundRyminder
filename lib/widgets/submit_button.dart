@@ -22,29 +22,35 @@ class SubmitButton extends StatelessWidget {
     final database = FirebaseFirestore.instance;
 
     void onPressed() {
-      Map<String, dynamic> current = Prefs.getMapValue("current");
-      String currentDorm =
-          ["Men A", "Men B", "Women A", "Women B"][current["dorm"]];
-      bool matches = Prefs.getStringValue("dorm") == currentDorm;
+      Map<String, dynamic> picked = Prefs.getMapValue("picked");
+      String pickedDorm =
+          ["Men A", "Men B", "Women A", "Women B"][picked["dorm"]];
+      bool matches = Prefs.getStringValue("dorm") == pickedDorm;
       late List<dynamic> response;
-      var document = database.collection("dorms").doc(currentDorm);
+      var document = database.collection("dorms").doc(pickedDorm);
+      late Map<String, dynamic> machine;
       if (matches) {
         document.get().then((doc) {
           response = doc.data()!["machines"];
           for (int i = 0; i < response.length; i++) {
-            if (response[i]["type"] == ["Washer", "Dryer"][current["type"]] &&
-                response[i]["code"] == current["code"]) {
+            if (response[i]["type"] == ["Washer", "Dryer"][picked["type"]] &&
+                response[i]["code"] == picked["code"]) {
               response[i]["option"] = Prefs.getIntValue("option");
 
               Timestamp now = Timestamp.fromDate(DateTime.now());
               response[i]["startedAt"] = now;
               response[i]["isRunning"] = true;
               response[i]["isDisabled"] = false;
+              machine = response[i];
               break;
             }
           }
         }).then((value) {
           document.set({"machines": response}, SetOptions(merge: true));
+          Prefs.setMapValue("current", {
+            "type": machine["type"],
+            "code": machine["code"],
+          });
         }).then((value) {
           Navigator.of(context).pop();
         });
