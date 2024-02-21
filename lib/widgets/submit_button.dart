@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:laundryminder/pages/main_page.dart';
 import 'package:laundryminder/utils/prefs.dart';
 
-class SubmitButton extends StatelessWidget {
+class SubmitButton extends StatefulWidget {
   const SubmitButton({
     super.key,
     required this.widthArg,
@@ -17,6 +18,11 @@ class SubmitButton extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
 
+  @override
+  State<SubmitButton> createState() => _SubmitButtonState();
+}
+
+class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
     final database = FirebaseFirestore.instance;
@@ -53,6 +59,10 @@ class SubmitButton extends StatelessWidget {
           });
         }).then((value) {
           Navigator.of(context).pop();
+        }).then((value) {
+          State<MainPage>? parent =
+              context.findAncestorStateOfType<State<MainPage>>();
+          parent?.setState(() {});
         });
       }
     }
@@ -62,21 +72,21 @@ class SubmitButton extends StatelessWidget {
         elevation: 0,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(widthArg * 0.035)),
-        backgroundColor: backgroundColor,
+            borderRadius: BorderRadius.circular(widget.widthArg * 0.035)),
+        backgroundColor: widget.backgroundColor,
         foregroundColor: Colors.white,
       ),
       onPressed: onPressed,
       child: SizedBox(
-        width: widthArg * 0.6,
-        height: widthArg * 0.6 / 6,
+        width: widget.widthArg * 0.6,
+        height: widget.widthArg * 0.6 / 6,
         child: Center(
           child: Text(
-            text,
+            widget.text,
             style: GoogleFonts.inter(
-              color: textColor,
+              color: widget.textColor,
               fontWeight: FontWeight.normal,
-              fontSize: widthArg * 0.035,
+              fontSize: widget.widthArg * 0.035,
             ),
           ),
         ),

@@ -39,7 +39,7 @@ class Prefs {
   static Map<String, dynamic> getMapValue(String key) {
     String? value = preferences.getString(key);
     if (value == null) {
-      throw Exception("Null value returned");
+      return jsonDecode("{}");
     }
     return jsonDecode(value);
   }

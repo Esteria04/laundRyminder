@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:laundryminder/utils/prefs.dart';
-import 'package:laundryminder/widgets/machine_card.dart';
+import 'package:laundryminder/widgets/machines/add_new_card.dart';
+import 'package:laundryminder/widgets/machines/machine_card.dart';
 import 'package:laundryminder/widgets/title_text.dart';
 
 class MainPage extends StatefulWidget {
@@ -27,25 +28,22 @@ class _MainPageState extends State<MainPage> {
 
   Map<String, dynamic> cardBuilder(
       Map<String, dynamic> machine, bool isCurrent) {
-    int? remainingTime;
+    double? remainingTime;
     bool isRunning = machine["isRunning"];
     Timestamp timestamp = machine["startedAt"];
     DateTime startedAt = timestamp.toDate();
     switch (machine["option"]) {
       case 0:
         remainingTime =
-            45 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
-
+            4.5 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
       case 1:
         remainingTime =
-            50 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
-
+            5.0 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
       case 2:
         remainingTime =
-            80 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
-
+            8.0 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
     }
 
@@ -68,7 +66,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(children: [
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
           height: screenWidth * 0.25,
         ),
@@ -84,22 +82,25 @@ class _MainPageState extends State<MainPage> {
             ),
           ],
         ),
-        StreamBuilder(
-            stream: stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var machines = snapshot.data!["machines"];
-                for (int i = 0; i < machines.length; i++) {
-                  if (machines[i]["type"] == current["type"] &&
-                      machines[i]["code"] == current["code"]) {
-                    return MachineCard(
-                        widthArg: screenWidth,
-                        machine: cardBuilder(machines[i], true));
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+          child: StreamBuilder(
+              stream: stream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var machines = snapshot.data!["machines"];
+                  if (current.isEmpty) return const AddNewCard();
+                  for (int i = 0; i < machines.length; i++) {
+                    if (machines[i]["type"] == current["type"] &&
+                        machines[i]["code"] == current["code"]) {
+                      return MachineCard(
+                          machine: cardBuilder(machines[i], true));
+                    }
                   }
                 }
-              }
-              return MachineCard(widthArg: screenWidth, machine: const {});
-            }),
+                return const AddNewCard();
+              }),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -128,9 +129,9 @@ class _MainPageState extends State<MainPage> {
                           cardBuilder(machineData, false);
                       return Padding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.08),
-                        child: MachineCard(
-                            widthArg: screenWidth, machine: machine),
+                          horizontal: screenWidth * 0.08,
+                        ),
+                        child: MachineCard(machine: machine),
                       );
                     },
                   ),
