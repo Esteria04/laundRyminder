@@ -25,6 +25,9 @@ class _CurrentDryerState extends State<CurrentDryer> {
               if (remainingTime > 0) {
                 remainingTime--;
               } else {
+                setState(() {
+                  widget.machine["isRunning"] = false;
+                });
                 return;
               }
             });
@@ -69,7 +72,7 @@ class _CurrentDryerState extends State<CurrentDryer> {
           width: screenWidth * 0.84 * 0.65,
           height: screenWidth * 0.462,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            borderRadius: BorderRadius.circular(screenWidth * 0.045),
             color: const Color(0xff761111),
           ),
           child: Column(

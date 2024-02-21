@@ -26,6 +26,9 @@ class _WasherState extends State<Washer> {
               if (remainingTime > 0) {
                 remainingTime--;
               } else {
+                setState(() {
+                  widget.machine["isRunning"] = false;
+                });
                 return;
               }
             });
@@ -71,7 +74,7 @@ class _WasherState extends State<Washer> {
           width: screenWidth * 0.84,
           height: screenWidth * 0.3,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            borderRadius: BorderRadius.circular(screenWidth * 0.045),
             color: const Color(0xff8DA7EC),
           ),
           child: Row(

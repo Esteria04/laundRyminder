@@ -167,7 +167,7 @@ class _AddNewCardState extends State<AddNewCard> {
           width: screenWidth * 0.84,
           height: screenWidth * 0.3,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(screenWidth * 0.03),
+            borderRadius: BorderRadius.circular(screenWidth * 0.045),
             color: const Color(0xff1C1B64),
           ),
           child: Row(

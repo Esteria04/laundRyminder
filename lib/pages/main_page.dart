@@ -16,7 +16,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   String dorm = Prefs.getStringValue("dorm");
-  Map<String, dynamic> current = Prefs.getMapValue("current");
   late Stream stream;
 
   @override
@@ -89,10 +88,14 @@ class _MainPageState extends State<MainPage> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   var machines = snapshot.data!["machines"];
-                  if (current.isEmpty) return const AddNewCard();
+                  if (Prefs.getMapValue("current").isEmpty) {
+                    return const AddNewCard();
+                  }
                   for (int i = 0; i < machines.length; i++) {
-                    if (machines[i]["type"] == current["type"] &&
-                        machines[i]["code"] == current["code"]) {
+                    if (machines[i]["type"] ==
+                            Prefs.getMapValue("current")["type"] &&
+                        machines[i]["code"] ==
+                            Prefs.getMapValue("current")["code"]) {
                       return MachineCard(
                           machine: cardBuilder(machines[i], true));
                     }
