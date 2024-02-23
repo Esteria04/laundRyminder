@@ -16,6 +16,8 @@ dependencies:
   card_loading: ^0.3.2
   flutter:
     sdk: flutter
+  flutter_local_notifications: ^16.3.2
+  permission_handler: ^11.3.0
 
 dev_dependencies:
   flutter_test:

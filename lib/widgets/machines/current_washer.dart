@@ -30,6 +30,7 @@ class _CurrentWasherState extends State<CurrentWasher> {
                 setState(() {
                   widget.machine["isRunning"] = false;
                 });
+
                 return;
               }
             });
@@ -145,26 +146,38 @@ class _CurrentWasherState extends State<CurrentWasher> {
                 SizedBox(
                   height: screenWidth * 0.462 * 0.05,
                 ),
-                GestureDetector(
-                  onTap: () {
-                    if (remainingTime > 0) {
-                      print("not finished running");
-                    } else {
-                      Prefs.removeValue("current");
-                      State<MainPage>? parent =
-                          context.findAncestorStateOfType<State<MainPage>>();
-                      parent?.setState(() {});
-                    }
-                  },
-                  child: Container(
-                    width: screenWidth * 0.84 * 0.3,
-                    height: screenWidth * 0.462 * 0.325,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff1C1B64),
+                ElevatedButton(
+                  onPressed: remainingTime > 0
+                      ? null
+                      : () {
+                          Prefs.removeValue("current");
+                          State<MainPage>? parent = context
+                              .findAncestorStateOfType<State<MainPage>>();
+                          parent?.setState(() {});
+                        },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.045),
                     ),
+                    disabledBackgroundColor: const Color(0xff7C7C7C),
+                    backgroundColor: const Color(0xff1C1B64),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.all(0),
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
                   ),
-                )
+                  child: SizedBox(
+                    width: screenWidth * 0.84 * 0.3,
+                    height: screenWidth * 0.462 * 0.325,
+                    child: const Center(
+                      child: Icon(
+                        size: 50,
+                        Icons.check_circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

@@ -1,3 +1,4 @@
+import 'package:card_loading/card_loading.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:laundryminder/utils/prefs.dart';
@@ -108,7 +109,11 @@ class _MainPageState extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+              padding: EdgeInsets.only(
+                left: screenWidth * 0.08,
+                right: screenWidth * 0.08,
+                top: screenWidth * 0.04,
+              ),
               child: TitleText(
                 data: "Machines",
                 fontSize: screenWidth * 0.07,
@@ -125,6 +130,7 @@ class _MainPageState extends State<MainPage> {
 
                 return Expanded(
                   child: ListView.builder(
+                    padding: EdgeInsets.zero,
                     itemCount: len,
                     itemBuilder: (context, index) {
                       Map<String, dynamic> machineData = data[index];
@@ -140,7 +146,47 @@ class _MainPageState extends State<MainPage> {
                   ),
                 );
               } else {
-                return Container();
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CardLoading(
+                        width: screenWidth * 0.84,
+                        height: screenWidth * 0.3,
+                        animationDuration: const Duration(microseconds: 400),
+                        borderRadius:
+                            BorderRadius.circular(screenWidth * 0.045),
+                        margin: const EdgeInsets.only(bottom: 10),
+                      ),
+                      CardLoading(
+                        width: screenWidth * 0.44,
+                        height: screenWidth * 0.1,
+                        animationDuration: const Duration(microseconds: 400),
+                        borderRadius:
+                            BorderRadius.circular(screenWidth * 0.045),
+                        margin: const EdgeInsets.only(bottom: 10),
+                      ),
+                      CardLoading(
+                        width: screenWidth * 0.84,
+                        height: screenWidth * 0.3,
+                        animationDuration: const Duration(microseconds: 400),
+                        borderRadius:
+                            BorderRadius.circular(screenWidth * 0.045),
+                        margin: const EdgeInsets.only(bottom: 10),
+                      ),
+                      CardLoading(
+                        width: screenWidth * 0.44,
+                        height: screenWidth * 0.1,
+                        animationDuration: const Duration(microseconds: 400),
+                        borderRadius:
+                            BorderRadius.circular(screenWidth * 0.045),
+                        margin: const EdgeInsets.only(bottom: 10),
+                      ),
+                    ],
+                  ),
+                );
               }
             }),
       ]),
