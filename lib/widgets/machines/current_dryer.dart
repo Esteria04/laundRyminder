@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/pages/main_page.dart';
+import 'package:laundryminder/utils/notification_service.dart';
 import 'package:laundryminder/utils/prefs.dart';
 
 class CurrentDryer extends StatefulWidget {
@@ -26,6 +27,9 @@ class _CurrentDryerState extends State<CurrentDryer> {
             setState(() {
               if (remainingTime > 0) {
                 remainingTime--;
+                if (remainingTime == 300) {
+                  NotificationService().show5mNotification();
+                }
               } else {
                 setState(() {
                   widget.machine["isRunning"] = false;
@@ -146,16 +150,14 @@ class _CurrentDryerState extends State<CurrentDryer> {
                   height: screenWidth * 0.462 * 0.05,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    if (remainingTime > 0) {
-                      print("not finished running");
-                    } else {
-                      Prefs.removeValue("current");
-                      State<MainPage>? parent =
-                          context.findAncestorStateOfType<State<MainPage>>();
-                      parent?.setState(() {});
-                    }
-                  },
+                  onTap: remainingTime > 0
+                      ? null
+                      : () {
+                          Prefs.removeValue("current");
+                          State<MainPage>? parent = context
+                              .findAncestorStateOfType<State<MainPage>>();
+                          parent?.setState(() {});
+                        },
                   child: Container(
                     width: screenWidth * 0.84 * 0.3,
                     height: screenWidth * 0.462 * 0.325,

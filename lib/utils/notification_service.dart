@@ -23,7 +23,7 @@ class NotificationService {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
-  Future<void> showNotification() async {
+  Future<void> show5mNotification() async {
     const int notificationId = 0;
 
     const AndroidNotificationDetails androidNotificationDetails =

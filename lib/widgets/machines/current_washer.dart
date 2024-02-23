@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:laundryminder/pages/main_page.dart';
+import 'package:laundryminder/utils/notification_service.dart';
 import 'package:laundryminder/utils/prefs.dart';
 
 class CurrentWasher extends StatefulWidget {
@@ -26,11 +27,13 @@ class _CurrentWasherState extends State<CurrentWasher> {
             setState(() {
               if (remainingTime > 0) {
                 remainingTime--;
+                if (remainingTime == 300) {
+                  NotificationService().show5mNotification();
+                }
               } else {
                 setState(() {
                   widget.machine["isRunning"] = false;
                 });
-
                 return;
               }
             });
