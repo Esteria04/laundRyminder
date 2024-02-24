@@ -46,6 +46,52 @@ class NotificationService {
     );
   }
 
+  Future<void> showEndedNotification(String type) async {
+    const int notificationId = 1;
+
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'laundryminder_channel',
+      'laundryminder channel',
+      channelDescription:
+          'This channel is used for laundryminder notifications',
+      importance: Importance.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+      notificationId,
+      '${type}ing Done',
+      "Please pick up your laundry",
+      notificationDetails,
+    );
+  }
+
+  Future<void> showOtherMachineNotification(String type, int code) async {
+    const int notificationId = 1;
+
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'laundryminder_channel',
+      'laundryminder channel',
+      channelDescription:
+          'This channel is used for laundryminder notifications',
+      importance: Importance.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+      notificationId,
+      "Time to get ready for the laundry!",
+      "You can use $type No.$code soon",
+      notificationDetails,
+    );
+  }
+
   Future<PermissionStatus> requestNotificationPermissions() async {
     final status = await Permission.notification.request();
     return status;

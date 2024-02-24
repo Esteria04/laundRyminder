@@ -33,6 +33,7 @@ class _CurrentWasherState extends State<CurrentWasher> {
               } else {
                 setState(() {
                   widget.machine["isRunning"] = false;
+                  NotificationService().showEndedNotification("Wash");
                 });
                 return;
               }
