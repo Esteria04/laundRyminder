@@ -12,7 +12,7 @@ class Washer extends StatefulWidget {
 }
 
 class _WasherState extends State<Washer> {
-  late double remainingTime;
+  late int remainingTime;
   Timer? timer;
 
   void startTimer() {

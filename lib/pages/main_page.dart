@@ -28,22 +28,22 @@ class _MainPageState extends State<MainPage> {
 
   Map<String, dynamic> cardBuilder(
       Map<String, dynamic> machine, bool isCurrent) {
-    double? remainingTime;
+    int? remainingTime;
     bool isRunning = machine["isRunning"];
     Timestamp timestamp = machine["startedAt"];
     DateTime startedAt = timestamp.toDate();
     switch (machine["option"]) {
       case 0:
         remainingTime =
-            4.5 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
+            45 * 6 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
       case 1:
         remainingTime =
-            5.0 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
+            50 * 6 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
       case 2:
         remainingTime =
-            8.0 * 60 - (DateTime.now().difference(startedAt)).inSeconds;
+            80 * 6 - (DateTime.now().difference(startedAt)).inSeconds;
         break;
     }
 

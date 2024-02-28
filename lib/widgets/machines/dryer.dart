@@ -12,7 +12,7 @@ class Dryer extends StatefulWidget {
 }
 
 class _DryerState extends State<Dryer> {
-  late double remainingTime;
+  late int remainingTime;
   Timer? timer;
 
   void startTimer() {

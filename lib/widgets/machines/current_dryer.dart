@@ -14,12 +14,14 @@ class CurrentDryer extends StatefulWidget {
 }
 
 class _CurrentDryerState extends State<CurrentDryer> {
-  late double remainingTime;
+  late int remainingTime;
+  // ignore: non_constant_identifier_names
+  late final int MAX_TIME;
   Timer? timer;
 
   void startTimer() {
     if (widget.machine["remainingTime"] != null) {
-      remainingTime = widget.machine["remainingTime"];
+      MAX_TIME = remainingTime = widget.machine["remainingTime"];
       timer = Timer.periodic(
         const Duration(seconds: 1),
         (timer) {
@@ -134,23 +136,50 @@ class _CurrentDryerState extends State<CurrentDryer> {
                     color: const Color(0xff761111),
                     borderRadius: BorderRadius.circular(screenWidth * 0.045),
                   ),
-                ),
-                SizedBox(
-                  height: screenWidth * 0.462 * 0.05,
-                ),
-                Container(
-                  width: screenWidth * 0.84 * 0.3,
-                  height: screenWidth * 0.462 * 0.325,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff761111),
-                    borderRadius: BorderRadius.circular(screenWidth * 0.045),
+                  child: Center(
+                    child: Text(
+                      "${remainingTime / MAX_TIME * 100} %",
+                      style: GoogleFonts.inter(
+                        color: const Color(0xff1B3D71),
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenWidth * 0.84 * 0.05,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: screenWidth * 0.462 * 0.05,
                 ),
-                GestureDetector(
-                  onTap: remainingTime > 0
+                ElevatedButton(
+                  onPressed: null,
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.045),
+                    ),
+                    disabledBackgroundColor: const Color(0xff7C7C7C),
+                    backgroundColor: const Color(0xff761111),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.all(0),
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  child: SizedBox(
+                    width: screenWidth * 0.84 * 0.3,
+                    height: screenWidth * 0.462 * 0.325,
+                    child: const Center(
+                      child: Icon(
+                        size: 50,
+                        Icons.bug_report_rounded,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: screenWidth * 0.462 * 0.05,
+                ),
+                ElevatedButton(
+                  onPressed: remainingTime > 0
                       ? null
                       : () {
                           Prefs.removeValue("current");
@@ -158,15 +187,29 @@ class _CurrentDryerState extends State<CurrentDryer> {
                               .findAncestorStateOfType<State<MainPage>>();
                           parent?.setState(() {});
                         },
-                  child: Container(
-                    width: screenWidth * 0.84 * 0.3,
-                    height: screenWidth * 0.462 * 0.325,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff761111),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.045),
                     ),
+                    disabledBackgroundColor: const Color(0xff7C7C7C),
+                    backgroundColor: const Color(0xff761111),
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.all(0),
+                    shadowColor: Colors.transparent,
+                    elevation: 0,
                   ),
-                )
+                  child: SizedBox(
+                    width: screenWidth * 0.84 * 0.3,
+                    height: screenWidth * 0.462 * 0.325,
+                    child: const Center(
+                      child: Icon(
+                        size: 50,
+                        Icons.check_circle,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
