@@ -35,6 +35,7 @@ class _CurrentDryerState extends State<CurrentDryer> {
               } else {
                 setState(() {
                   widget.machine["isRunning"] = false;
+                  NotificationService().showEndedNotification("Dry");
                 });
                 return;
               }
